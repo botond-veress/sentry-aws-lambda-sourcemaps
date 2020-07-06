@@ -1,0 +1,9 @@
+.vscode
+
+node_modules
+
+.webpack
+.serverless
+*.log
+.env*
+.npmrc

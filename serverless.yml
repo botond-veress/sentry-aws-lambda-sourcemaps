@@ -1,0 +1,37 @@
+service:
+  name: random-service
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+package:
+  exclude:
+    - node_modules/**/*
+
+custom:
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  serverless-offline:
+    host: localhost
+    port: 8000
+
+provider:
+  name: aws
+  stage: local
+  runtime: nodejs12.x
+  region: eu-central-1
+  environment:
+    SENTRY_DSN: ${env:SENTRY_DSN, ''}
+
+functions:
+  getRandom:
+    handler: src/get-random.handler
+    events:
+      - http:
+          path: /random
+          method: get
+          cors: true
